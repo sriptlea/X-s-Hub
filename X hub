@@ -26,6 +26,97 @@ local Window = Rayfield:CreateWindow({
    }
 })
 
-local MainTab = Window:CreateTab("Home", 4483362458) -- Title, Image
+local MainTab = Window:CreateTab("Home", 11433532654) -- Title, Image
+local MainSection = MainTab:CreateSection("Main")
 
-local AdminTab = Window:CreateTab("Admin", 4483362458) -- Title, Image
+Rayfield:Notify({
+   Title = "Welcome to X's hub",
+   Content = "Notification",
+   Duration = 5,
+   Image = nil,
+   Actions = { -- Notification Buttons
+      Ignore = {
+         Name = "Okay!",
+         Callback = function()
+         print("nil")
+      end
+   },
+},
+})
+
+
+local Button = MainTab:CreateButton({
+   Name = "Fly",
+   Callback = function()
+   local player = game.Players.LocalPlayer
+local userInputService = game:GetService("UserInputService")
+local runService = game:GetService("RunService")
+
+local flying = false
+local speed = 50
+local bodyVelocity
+local bodyGyro
+
+function startFlying()
+    if flying then return end
+
+    flying = true
+
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+    bodyVelocity = Instance.new("BodyVelocity")
+    bodyVelocity.Velocity = Vector3.new(0, 0, 0)
+    bodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)
+    bodyVelocity.Parent = humanoidRootPart
+
+    bodyGyro = Instance.new("BodyGyro")
+    bodyGyro.CFrame = humanoidRootPart.CFrame
+    bodyGyro.MaxTorque = Vector3.new(100000, 100000, 100000)
+    bodyGyro.P = 3000
+    bodyGyro.Parent = humanoidRootPart
+
+    local camera = workspace.CurrentCamera
+
+    runService.RenderStepped:Connect(function()
+        if flying then
+            local direction = Vector3.new(0, 0, 0)
+            if userInputService:IsKeyDown(Enum.KeyCode.W) then
+                direction = direction + (camera.CFrame.LookVector)
+            end
+            if userInputService:IsKeyDown(Enum.KeyCode.S) then
+                direction = direction - (camera.CFrame.LookVector)
+            end
+            if userInputService:IsKeyDown(Enum.KeyCode.A) then
+                direction = direction - (camera.CFrame.RightVector)
+            end
+            if userInputService:IsKeyDown(Enum.KeyCode.D) then
+                direction = direction + (camera.CFrame.RightVector)
+            end
+            if userInputService:IsKeyDown(Enum.KeyCode.Space) then
+                direction = direction + (camera.CFrame.UpVector)
+            end
+            if userInputService:IsKeyDown(Enum.KeyCode.LeftControl) then
+                direction = direction - (camera.CFrame.UpVector)
+            end
+
+            bodyVelocity.Velocity = direction * speed
+            bodyGyro.CFrame = camera.CFrame
+        end
+    end)
+end
+   end,
+})
+
+local Slider = Tab:CreateSlider({
+   Name = "walkspeed",
+   Range = {0, 300},
+   Increment = 10,
+   Suffix = "Speed",
+   CurrentValue = 16,
+   Flag = "Slider1",
+   Callback = function(Value)
+      game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
+   end,
+})
+local AdminTab = Window:CreateTab("Admin", 12967561554) -- Title, Image
