@@ -1,0 +1,31 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "X'S HUB",
+   LoadingTitle = "X'S HUB IS LOADING...",
+   LoadingSubtitle = "by XxitscoolxX0 and MRMDABEAST",
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "X's Hub"
+   },
+   Discord = {
+      Enabled = true,
+      Invite = "https://discord.gg/pA9rKCzBzn", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
+      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+   },
+   KeySystem = true, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "X's HUB KEY SYSTEM",
+      Subtitle = "Key System",
+      Note = "Please get the key by asking a staff member",
+      FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = {"A3z8Bs&2jf63^a2","lw8Bt!2j#221^a2","X HUB BETA KEY","2024","AHd81$%dnha*aj2"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+   }
+})
+
+local MainTab = Window:CreateTab("Home", 4483362458) -- Title, Image
+
+local AdminTab = Window:CreateTab("Admin", 4483362458) -- Title, Image
